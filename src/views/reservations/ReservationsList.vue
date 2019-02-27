@@ -39,7 +39,7 @@
                     <th class="table__body-cell">
                         <Dropdown
                             :menuItems="[
-                                {title: 'Edit reservation', route: '/apartments/edit', strong: false},
+                                {title: 'Edit reservation', action: () => goToRoute('edit-reservation', index), strong: false},
                                 {title: 'Delete reservation', action: () => handleDeleteReservation(index), strong: true}
                             ]"
                         />
@@ -60,6 +60,9 @@ export default {
     methods: {
         handleDeleteReservation(id) {
             this.$store.dispatch('deleteReservation', id);
+        },
+        goToRoute(route, reservationId) {
+            this.$router.push({ name: route, params: {reservationId: reservationId} });
         }
     },
     computed: {

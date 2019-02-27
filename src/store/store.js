@@ -70,6 +70,16 @@ export default new Vuex.Store({
 
             state.reservationsList = filteredReservationsList;
         },
+        'EDIT_RESERVATION'(state, payload) {
+            const id = payload.id;
+
+            state.reservationsList[id].apartmentId = payload.apartmentId;
+            state.reservationsList[id].firstName = payload.firstName;
+            state.reservationsList[id].lastName = payload.lastName;
+            state.reservationsList[id].startDate = payload.startDate;
+            state.reservationsList[id].endDate = payload.endDate;
+            state.reservationsList[id].contactNumber = payload.contactNumber;
+        },
     },
     actions: {
         addApartment({commit}, apartment) {
@@ -87,6 +97,9 @@ export default new Vuex.Store({
         deleteReservation({commit}, id) {
             commit('DELETE_RESERVATION', id);
         },
+        editReservation({commit}, data) {
+            commit('EDIT_RESERVATION', data);
+        }
     },
     getters: {
         apartmentsList(state) {
