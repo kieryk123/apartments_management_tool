@@ -1,0 +1,42 @@
+@import "components/_btn";
+@import "components/_header";
+@import "components/_table";
+@import "components/_input";
+@import "components/_form";
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: white;
+    font-family: "Open Sans";
+    margin: 0;
+    padding: 0;
+}
+
+.app {
+    &__view-wrapper {
+        height: calc(100vh - 166px);
+        padding: 50px 60px;
+    }
+}
+
+.page {
+    &__heading {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
+    }
+
+    &__heading-title {
+        font-size: 22px;
+        color: #1c2d41;
+        font-weight: 600;
+        margin-top: 0;
+        margin-bottom: 0;
+        line-height: 2.139;
+    }
+}

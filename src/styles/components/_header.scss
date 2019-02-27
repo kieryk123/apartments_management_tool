@@ -1,0 +1,43 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #e4e8f1;
+
+    &__logo {
+        font-weight: 700;
+        font-size: 18px;
+        margin-right: 35px;
+    }
+
+    &__nav {
+        display: block;
+    }
+
+    &__list {
+        display: block;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    &__list-item {
+        display: inline-block;
+        margin: 0 5px;
+    }
+
+    &__list-link {
+        display: inline-block;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        color: #949fb1;
+        padding: 0 7px;
+
+        &--active {
+            color: #0aafff;
+        }
+    }
+}
