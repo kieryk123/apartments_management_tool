@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Home from './views/reservations/ReservationsList.vue';
 import ApartmentsList from './views/apartments/ApartmentsList.vue';
 import AddApartment from './views/apartments/AddApartment.vue';
+import EditApartment from './views/apartments/EditApartment.vue';
 import ReservationsList from './views/reservations/ReservationsList.vue';
 import AddReservation from './views/reservations/AddReservation.vue';
 
@@ -26,6 +27,12 @@ export default new Router({
             path: '/apartments/add',
             name: 'add-apartment',
             component: AddApartment
+        },
+        {
+            path: '/apartments/edit',
+            name: 'edit-apartment',
+            component: EditApartment,
+            props: true
         },
         {
             path: '/reservations',

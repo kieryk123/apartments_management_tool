@@ -2,8 +2,18 @@
     <div @click="visible = !visible" class="dropdown">
         <div v-if="visible" class="dropdown__menu">
             <template v-for="item in menuItems">
-                <a v-if="item.strong" :key="item.index" @click="item.action" class="dropdown__menu-link dropdown__menu-link--strong-color">{{ item.title }}</a>
-                <a v-else :key="item.index" href="#" class="dropdown__menu-link">{{ item.title }}</a>
+                <a
+                    v-if="item.strong"
+                    :key="item.index"
+                    @click="item.action"
+                    class="dropdown__menu-link dropdown__menu-link--strong-color"
+                >{{ item.title }}</a>
+                <a
+                    v-else
+                    :key="item.index"
+                    @click="item.action"
+                    class="dropdown__menu-link"
+                >{{ item.title }}</a>
             </template>
         </div>
     </div>
