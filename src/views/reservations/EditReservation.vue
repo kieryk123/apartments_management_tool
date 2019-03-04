@@ -13,12 +13,13 @@
                 <input id="lastName" v-model="lastName" class="input" type="text">
             </div>
             <div class="form__col">
-                <label class="label" for="startDate">Start date:</label>
-                <input id="startDate" v-model="startDate" class="input" type="text">
-            </div>
-            <div class="form__col">
-                <label class="label" for="endDate">End date:</label>
-                <input id="endDate" v-model="endDate" class="input" type="text">
+                <label class="label" for="startDate">Period of time:</label>
+                <HotelDatePicker
+                    :startingDateValue="new Date(startDate)"
+                    :endingDateValue="new Date(endDate)"
+                    @check-in-changed="setStartDate"
+                    @check-out-changed="setEndDate">
+                </HotelDatePicker>
             </div>
             <div class="form__col">
                 <label class="label" for="contactNumber">Contact number:</label>
@@ -43,6 +44,8 @@
 </template>
 
 <script>
+import HotelDatePicker from 'vue-hotel-datepicker';
+
 export default {
     created() {
         this.reservationId = this.$route.params.reservationId;
@@ -73,6 +76,12 @@ export default {
         }
     },
     methods: {
+        setStartDate(date) {
+            this.startDate = date;
+        },
+        setEndDate(date) {
+            this.endDate = date;
+        },
         handleChooseApartment(e) {
             this.apartmentId = e.target.value;
         },
@@ -92,6 +101,9 @@ export default {
             this.$store.dispatch('editReservation', reservation);
             this.$router.push({ name: 'reservations' });
         }
+    },
+    components: {
+        HotelDatePicker
     }
 }
 </script>
