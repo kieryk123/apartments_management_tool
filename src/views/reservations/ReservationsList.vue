@@ -27,8 +27,8 @@
                             <span class="table__additional-text">{{ apartmentsList[reservation.apartmentId].address }}</span>
                         </span>
                     </th>
-                    <th class="table__body-cell">{{ reservation.startDate }}</th>
-                    <th class="table__body-cell">{{ reservation.endDate }}</th>
+                    <th class="table__body-cell">{{ reservation.startDate | formatDate }}</th>
+                    <th class="table__body-cell">{{ reservation.endDate | formatDate }}</th>
                     <th class="table__body-cell">£{{ 'xxx' }}</th>
                     <th class="table__body-cell">
                         <span class="table__info-wrapper">
