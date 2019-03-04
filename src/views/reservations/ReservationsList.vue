@@ -29,7 +29,15 @@
                     </th>
                     <th class="table__body-cell">{{ reservation.startDate | formatDate }}</th>
                     <th class="table__body-cell">{{ reservation.endDate | formatDate }}</th>
-                    <th class="table__body-cell">£{{ 'xxx' }}</th>
+                    <th class="table__body-cell">
+                    £{{
+                        calculateProfit(
+                            reservation.startDate,
+                            reservation.endDate,
+                            apartmentsList[reservation.apartmentId].pricePerNight
+                        )
+                    }}
+                    </th>
                     <th class="table__body-cell">
                         <span class="table__info-wrapper">
                             <span class="table__main-text">{{ reservation.customer.firstName }} {{ reservation.customer.lastName }}</span>
@@ -71,6 +79,17 @@ export default {
         },
         goToRoute(route, reservationId) {
             this.$router.push({ name: route, params: {reservationId: reservationId} });
+        },
+        calculateProfit(startDate, endDate, pricePerNight) {
+            startDate = new Date(startDate);
+            endDate = new Date(endDate);
+
+            const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+            const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+            const profit = dayDiff * pricePerNight;
+
+            return profit;
         }
     },
     computed: {

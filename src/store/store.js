@@ -25,8 +25,8 @@ export default new Vuex.Store({
         reservationsList: [
             {
                 apartmentId: 0,
-                startDate: '19 Dec 2019',
-                endDate: '26 Dec 2019',
+                startDate: 'Thu Dec 19 2019 00:00:00 GMT+0100 (Central European Standard Time)',
+                endDate: 'Thu Dec 26 2019 00:00:00 GMT+0100 (Central European Standard Time)',
                 customer: {
                     firstName: 'John',
                     lastName: 'Doe',
@@ -35,8 +35,8 @@ export default new Vuex.Store({
             },
             {
                 apartmentId: 1,
-                startDate: '11 Dec 2019',
-                endDate: '21 Dec 2019',
+                startDate: 'Wed Dec 11 2019 00:00:00 GMT+0100 (Central European Standard Time)',
+                endDate: 'Sat Dec 21 2019 00:00:00 GMT+0100 (Central European Standard Time)',
                 customer: {
                     firstName: 'Paul',
                     lastName: 'Johan',
