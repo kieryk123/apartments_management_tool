@@ -74,11 +74,11 @@ export default new Vuex.Store({
             const id = payload.id;
 
             state.reservationsList[id].apartmentId = payload.apartmentId;
-            state.reservationsList[id].firstName = payload.firstName;
-            state.reservationsList[id].lastName = payload.lastName;
+            state.reservationsList[id].customer.firstName = payload.customer.firstName;
+            state.reservationsList[id].customer.lastName = payload.customer.lastName;
+            state.reservationsList[id].customer.phone = payload.customer.phone;
             state.reservationsList[id].startDate = payload.startDate;
             state.reservationsList[id].endDate = payload.endDate;
-            state.reservationsList[id].contactNumber = payload.contactNumber;
         },
     },
     actions: {
