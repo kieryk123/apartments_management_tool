@@ -26,8 +26,13 @@
             </div>
             <div class="form__col">
                 <label class="label" for="apartment">Choose apartment:</label>
-                <select @change="handleChooseApartment">
-                    <option id="apartment" v-for="(apartment, index) in apartmentsList" :value="index">
+                <select
+                    @change="handleChooseApartment"
+                    v-model="selectChosenValue">
+                    <option
+                        id="apartment"
+                        v-for="(apartment, index) in apartmentsList"
+                        :value="index">
                         {{ apartment.name }}
                     </option>
                 </select>
@@ -47,6 +52,7 @@ export default {
         this.endDate = this.reservationsList[this.reservationId].endDate;
         this.contactNumber = this.reservationsList[this.reservationId].customer.phone;
         this.apartmentId = this.reservationsList[this.reservationId].apartmentId;
+        this.selectChosenValue = this.apartmentId;
     },
     data: () => ({
         reservationId: null,
@@ -55,7 +61,8 @@ export default {
         startDate: '',
         endDate: '',
         contactNumber: '',
-        apartmentId: 0
+        apartmentId: 0,
+        selectChosenValue: ''
     }),
     computed: {
         reservationsList() {

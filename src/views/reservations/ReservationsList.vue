@@ -39,8 +39,16 @@
                     <th class="table__body-cell">
                         <Dropdown
                             :menuItems="[
-                                {title: 'Edit reservation', action: () => goToRoute('edit-reservation', index), strong: false},
-                                {title: 'Delete reservation', action: () => handleDeleteReservation(index), strong: true}
+                                {
+                                    title: 'Edit reservation',
+                                    action: () => goToRoute('edit-reservation', index),
+                                    strong: false
+                                },
+                                {
+                                    title: 'Delete reservation',
+                                    action: () => handleDeleteReservation(index),
+                                    strong: true
+                                }
                             ]"
                         />
                     </th>

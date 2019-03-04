@@ -14,7 +14,7 @@
             </div>
             <div class="form__col">
                 <label class="label" for="price">Apartment price per night:</label>
-                <input id="price" v-model="pricePerNight" class="input" type="number" placeholder="Price per night">
+                <input id="price" v-model.number="pricePerNight" class="input" type="number" placeholder="Price per night">
             </div>
             <div class="form__col">
                 <label class="label" for="image">Apartment image:</label>
