@@ -25,12 +25,12 @@
                 <input id="contactNumber" v-model="contactNumber" class="input" type="text">
             </div>
             <div class="form__col">
-                <label class="label" for="apartment">Choose apartment:</label>
-                <select @change="handleChooseApartment">
-                    <option id="apartment" v-for="(apartment, index) in apartmentsList" :value="index">
-                        {{ apartment.name }}
-                    </option>
-                </select>
+                <label class="label">Choose apartment:</label>
+                <v-select
+                    :value="apartmentsList[apartmentId]"
+                    :options="apartmentsList"
+                    :onChange="handleChooseApartment">
+                </v-select>
             </div>
         </div>
         <button class="btn btn--primary" @click="submitForm">Submit</button>
@@ -39,6 +39,7 @@
 
 <script>
 import HotelDatePicker from 'vue-hotel-datepicker';
+import vSelect from 'vue-select';
 
 export default {
     data: () => ({
@@ -51,7 +52,14 @@ export default {
     }),
     computed: {
         apartmentsList() {
-            return this.$store.getters.apartmentsList;
+            const selectOptions = this.$store.getters.apartmentsList.map((el, index) => {
+                return {
+                    label: el.name,
+                    value: index
+                }
+            });
+
+            return selectOptions;
         }
     },
     methods: {
@@ -61,8 +69,8 @@ export default {
         setEndDate(date) {
             this.endDate = date;
         },
-        handleChooseApartment(e) {
-            this.apartmentId = e.target.value;
+        handleChooseApartment(option) {
+            this.apartmentId = option.value;
         },
         submitForm() {
             if (this.firstName == '' || this.lastName == '' || this.startDate == '' || this.endDate == '' || this.contactNumber == '') {
@@ -86,7 +94,8 @@ export default {
         }
     },
     components: {
-        HotelDatePicker
+        HotelDatePicker,
+        vSelect
     }
 }
 </script>

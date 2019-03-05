@@ -1,18 +1,18 @@
 <template>
-    <div @click="visible = !visible" class="dropdown">
-        <div v-if="visible" class="dropdown__menu">
+    <div @click="visible = !visible" class="table-dropdown">
+        <div v-if="visible" class="table-dropdown__menu">
             <template v-for="item in menuItems">
                 <a
                     v-if="item.strong"
                     :key="item.index"
                     @click="item.action"
-                    class="dropdown__menu-link dropdown__menu-link--strong-color"
+                    class="table-dropdown__menu-link table-dropdown__menu-link--strong-color"
                 >{{ item.title }}</a>
                 <a
                     v-else
                     :key="item.index"
                     @click="item.action"
-                    class="dropdown__menu-link"
+                    class="table-dropdown__menu-link"
                 >{{ item.title }}</a>
             </template>
         </div>
@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style lang="scss">
-.dropdown {
+.table-dropdown {
     position: relative;
     background-size: 100% 100%;
     height: 28px;
