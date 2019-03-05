@@ -11,6 +11,7 @@
     "vue": "^2.5.22",
     "vue-hotel-datepicker": "^2.6.4",
     "vue-router": "^3.0.1",
+    "vue-select": "^2.5.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
