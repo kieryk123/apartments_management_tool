@@ -19,7 +19,7 @@
             <tbody class="table__body">
                 <tr v-for="(apartment, index) in apartmentsList" :key="index" class="table__row">
                     <th class="table__body-cell table__body-cell--name">
-                        <img class="table__img" src="http://placehold.it/56x56" alt="">
+                        <img class="table__img" width="56px" height="56px" :src="apartment.imageObject" alt="">
                         <span class="table__info-wrapper">
                             <span class="table__main-text">{{ apartment.name }}</span>
                         </span>
