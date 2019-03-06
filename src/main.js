@@ -1,7 +1,11 @@
 import Vue from 'vue';
 import App from './App.vue';
+import axios from 'axios';
 import router from './router';
 import store from './store/store';
+
+// axios config
+axios.defaults.baseURL = 'https://apartment-management-tool.firebaseio.com';
 
 // global filters
 Vue.filter('formatDate', (date) => {

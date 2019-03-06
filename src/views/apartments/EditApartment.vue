@@ -28,11 +28,13 @@
 <script>
 export default {
     created() {
+        const obj = { ...this.apartmentsList.filter(el => el.id == this.$route.params.apartmentId) };
+
         this.apartmentId = this.$route.params.apartmentId;
-        this.name = this.apartmentsList[this.apartmentId].name;
-        this.address = this.apartmentsList[this.apartmentId].address;
-        this.pricePerNight = this.apartmentsList[this.apartmentId].pricePerNight;
-        this.imageObject = this.apartmentsList[this.apartmentId].imageObject;
+        this.name = obj[0].name;
+        this.address = obj[0].address;
+        this.pricePerNight = obj[0].pricePerNight;
+        this.imageObject = obj[0].imageObject;
     },
     data: () => ({
         apartmentId: null,

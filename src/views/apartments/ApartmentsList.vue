@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody class="table__body">
-                <tr v-for="(apartment, index) in apartmentsList" :key="index" class="table__row">
+                <tr v-for="apartment in apartmentsList" :key="apartment.id" class="table__row">
                     <th class="table__body-cell table__body-cell--name">
                         <img class="table__img" width="56px" height="56px" :src="apartment.imageObject" alt="">
                         <span class="table__info-wrapper">
@@ -31,12 +31,12 @@
                             :menuItems="[
                                 {
                                     title: 'Edit apartment',
-                                    action: () => goToRoute('edit-apartment', index),
+                                    action: () => goToRoute('edit-apartment', apartment.id),
                                     strong: false
                                 },
                                 {
                                     title: 'Delete apartment',
-                                    action: () => handleDeleteApartment(index),
+                                    action: () => handleDeleteApartment(apartment.id),
                                     strong: true
                                 }
                             ]"
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import Dropdown from '@/components/Dropdown.vue';
 
 export default {

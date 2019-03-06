@@ -1,27 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from 'axios';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        apartmentsList: [
-            {
-                name: 'Royal Apartment',
-                address: '3810 Cronin Skyway',
-                pricePerNight: 119
-            },
-            {
-                name: 'Queen\'s House Apartment',
-                address: '981 Arnoldo Crossroad',
-                pricePerNight: 99
-            },
-            {
-                name: 'Old City Apartment',
-                address: '125 Time Square',
-                pricePerNight: 189
-            }
-        ],
+        apartmentsList: [],
         reservationsList: [
             {
                 apartmentId: 0,
@@ -46,21 +31,26 @@ export default new Vuex.Store({
         ]
     },
     mutations: {
+        'GET_APARTMENTS'(state, payload) {
+            state.apartmentsList = payload;
+        },
         'ADD_APARTMENT'(state, payload) {
             state.apartmentsList.push(payload);
         },
         'DELETE_APARTMENT'(state, payload) {
-            const filteredApartmentsList = state.apartmentsList.filter((el, index) => index !== payload);
+            const filteredApartmentsList = state.apartmentsList.filter((el) => el.id !== payload);
 
             state.apartmentsList = filteredApartmentsList;
         },
         'EDIT_APARTMENT'(state, payload) {
-            const id = payload.id;
-
-            state.apartmentsList[id].name = payload.name;
-            state.apartmentsList[id].address = payload.address;
-            state.apartmentsList[id].pricePerNight = payload.pricePerNight;
-            state.apartmentsList[id].imageObject = payload.imageObject;
+            for (let i = 0; i < state.apartmentsList.length; i++) {
+                if (state.apartmentsList[i].id == payload.id) {
+                    state.apartmentsList[i].name = payload.name;
+                    state.apartmentsList[i].address = payload.address;
+                    state.apartmentsList[i].pricePerNight = payload.pricePerNight;
+                    state.apartmentsList[i].imageObject = payload.imageObject;
+                }
+            }
         },
         'ADD_RESERVATION'(state, payload) {
             state.reservationsList.push(payload);
@@ -82,14 +72,43 @@ export default new Vuex.Store({
         },
     },
     actions: {
+        getApartments({commit}) {
+            axios.get('/apartments.json')
+                .then(res => {
+                    const data = res.data;
+                    let apartments = [];
+
+                    for (let key in data) {
+                        const apartment = data[key];
+                        apartment.id = key;
+                        apartments.push(apartment)
+                    }
+
+                    commit('GET_APARTMENTS', apartments);
+                })
+                .catch(err => console.log(err));
+        },
         addApartment({commit}, apartment) {
-            commit('ADD_APARTMENT', apartment);
+            axios.post('/apartments.json', apartment)
+                .then(res => {
+                    apartment.id = res.data.name;
+                    commit('ADD_APARTMENT', apartment);
+                })
+                .catch(err => console.log(err));
         },
         deleteApartment({commit}, id) {
-            commit('DELETE_APARTMENT', id);
+            axios.delete(`/apartments/${id}.json/`)
+                .then(res => {
+                    commit('DELETE_APARTMENT', id);
+                })
+                .catch(err => console.log(err));
         },
         editApartment({commit}, data) {
-            commit('EDIT_APARTMENT', data);
+            axios.put(`/apartments/${data.id}.json/`, data)
+                .then(res => {
+                    commit('EDIT_APARTMENT', data);
+                })
+                .catch(err => console.log(err));
         },
         addReservation({commit}, reservation) {
             commit('ADD_RESERVATION', reservation);
