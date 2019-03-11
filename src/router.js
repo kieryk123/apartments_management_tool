@@ -33,7 +33,8 @@ export default new Router({
             path: '/apartments/edit',
             name: 'edit-apartment',
             component: EditApartment,
-            props: true
+            props: true,
+            beforeEnter: (to, from, next) => to.params.apartmentId ? next() : next({ name: 'apartments' })
         },
         {
             path: '/reservations',
@@ -43,7 +44,8 @@ export default new Router({
         {
             path: '/reservations/add',
             name: 'add-reservation',
-            component: AddReservation
+            component: AddReservation,
+            beforeEnter: (to, from, next) => to.params.apartmentId ? next() : next({ name: 'reservations' })
         },
         {
             path: '/reservations/edit',

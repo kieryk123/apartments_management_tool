@@ -43,9 +43,6 @@ import HotelDatePicker from 'vue-hotel-datepicker';
 import vSelect from 'vue-select';
 
 export default {
-    beforeRouteEnter (to, from, next) {
-        to.params.reservationId ? next() : next({ name: 'reservations' });
-    },
     created() {
         const obj = { ...this.reservationsList.filter(el => el.id == this.$route.params.reservationId) };
 
