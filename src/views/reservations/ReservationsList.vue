@@ -21,10 +21,10 @@
             <tbody class="table__body">
                 <tr v-for="(reservation, index) in reservationsList" :key="index" class="table__row">
                     <th class="table__body-cell table__body-cell--name">
-                        <img class="table__img" width="56px" height="56px" :src="apartmentsList[reservation.apartmentId].imageObject" alt="">
+                        <img class="table__img" width="56px" height="56px" :src="apartment(reservation.apartmentId).imageObject" alt="">
                         <span class="table__info-wrapper">
-                            <span class="table__main-text">{{ apartmentsList[reservation.apartmentId].name }}</span>
-                            <span class="table__additional-text">{{ apartmentsList[reservation.apartmentId].address }}</span>
+                            <span class="table__main-text">{{ apartment(reservation.apartmentId).name }}</span>
+                            <span class="table__additional-text">{{ apartment(reservation.apartmentId).address }}</span>
                         </span>
                     </th>
                     <th class="table__body-cell">{{ reservation.startDate | formatDate }}</th>
@@ -34,7 +34,7 @@
                         calculateProfit(
                             reservation.startDate,
                             reservation.endDate,
-                            apartmentsList[reservation.apartmentId].pricePerNight
+                            apartment(reservation.apartmentId).pricePerNight
                         )
                     }}
                     </th>
@@ -49,12 +49,12 @@
                             :menuItems="[
                                 {
                                     title: 'Edit reservation',
-                                    action: () => goToRoute('edit-reservation', index),
+                                    action: () => goToRoute('edit-reservation', reservation.id),
                                     strong: false
                                 },
                                 {
                                     title: 'Delete reservation',
-                                    action: () => handleDeleteReservation(index),
+                                    action: () => handleDeleteReservation(reservation.id),
                                     strong: true
                                 }
                             ]"
@@ -90,6 +90,9 @@ export default {
             const profit = dayDiff * pricePerNight;
 
             return profit;
+        },
+        apartment(apartmentId) {
+            return this.apartmentsList.find(apartment => apartment.id === apartmentId);
         }
     },
     computed: {

@@ -7,30 +7,10 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         apartmentsList: [],
-        reservationsList: [
-            {
-                apartmentId: 0,
-                startDate: 'Thu Dec 19 2019 00:00:00 GMT+0100 (Central European Standard Time)',
-                endDate: 'Thu Dec 26 2019 00:00:00 GMT+0100 (Central European Standard Time)',
-                customer: {
-                    firstName: 'John',
-                    lastName: 'Doe',
-                    phone: '+48 694 180 362'
-                }
-            },
-            {
-                apartmentId: 1,
-                startDate: 'Wed Dec 11 2019 00:00:00 GMT+0100 (Central European Standard Time)',
-                endDate: 'Sat Dec 21 2019 00:00:00 GMT+0100 (Central European Standard Time)',
-                customer: {
-                    firstName: 'Paul',
-                    lastName: 'Johan',
-                    phone: '+48 884 888 366'
-                }
-            }
-        ]
+        reservationsList: []
     },
     mutations: {
+        // apartments
         'GET_APARTMENTS'(state, payload) {
             state.apartmentsList = payload;
         },
@@ -52,23 +32,29 @@ export default new Vuex.Store({
                 }
             }
         },
+        // reservations
+        'GET_RESERVATIONS'(state, payload) {
+            state.reservationsList = payload;
+        },
         'ADD_RESERVATION'(state, payload) {
             state.reservationsList.push(payload);
         },
         'DELETE_RESERVATION'(state, payload) {
-            const filteredReservationsList = state.reservationsList.filter((el, index) => index !== payload);
+            const filteredReservationsList = state.reservationsList.filter((el) => el.id !== payload);
 
             state.reservationsList = filteredReservationsList;
         },
         'EDIT_RESERVATION'(state, payload) {
-            const id = payload.id;
-
-            state.reservationsList[id].apartmentId = payload.apartmentId;
-            state.reservationsList[id].customer.firstName = payload.customer.firstName;
-            state.reservationsList[id].customer.lastName = payload.customer.lastName;
-            state.reservationsList[id].customer.phone = payload.customer.phone;
-            state.reservationsList[id].startDate = payload.startDate;
-            state.reservationsList[id].endDate = payload.endDate;
+            for (let i = 0; i < state.reservationsList.length; i++) {
+                if (state.reservationsList[i].id == payload.id) {
+                    state.reservationsList[i].apartmentId = payload.apartmentId;
+                    state.reservationsList[i].customer.firstName = payload.customer.firstName;
+                    state.reservationsList[i].customer.lastName = payload.customer.lastName;
+                    state.reservationsList[i].customer.phone = payload.customer.phone;
+                    state.reservationsList[i].startDate = payload.startDate;
+                    state.reservationsList[i].endDate = payload.endDate;
+                }
+            }
         },
     },
     actions: {
@@ -110,14 +96,43 @@ export default new Vuex.Store({
                 })
                 .catch(err => console.log(err));
         },
+        getReservations({commit}) {
+            axios.get('/reservations.json')
+                .then(res => {
+                    const data = res.data;
+                    let reservations = [];
+
+                    for (let key in data) {
+                        const reservation = data[key];
+                        reservation.id = key;
+                        reservations.push(reservation)
+                    }
+
+                    commit('GET_RESERVATIONS', reservations);
+                })
+                .catch(err => console.log(err));
+        },
         addReservation({commit}, reservation) {
-            commit('ADD_RESERVATION', reservation);
+            axios.post('/reservations.json', reservation)
+                .then(res => {
+                    reservation.id = res.data.name;
+                    commit('ADD_RESERVATION', reservation);
+                })
+                .catch(err => console.log(err));
         },
         deleteReservation({commit}, id) {
-            commit('DELETE_RESERVATION', id);
+            axios.delete(`/reservations/${id}.json/`)
+                .then(res => {
+                    commit('DELETE_RESERVATION', id);
+                })
+                .catch(err => console.log(err));
         },
         editReservation({commit}, data) {
-            commit('EDIT_RESERVATION', data);
+            axios.put(`/reservations/${data.id}.json/`, data)
+                .then(res => {
+                    commit('EDIT_RESERVATION', data);
+                })
+                .catch(err => console.log(err));
         }
     },
     getters: {

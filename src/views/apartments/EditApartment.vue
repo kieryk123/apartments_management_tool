@@ -27,6 +27,9 @@
 
 <script>
 export default {
+    beforeRouteEnter (to, from, next) {
+        to.params.apartmentId ? next() : next({ name: 'reservations' });
+    },
     created() {
         const obj = { ...this.apartmentsList.filter(el => el.id == this.$route.params.apartmentId) };
 

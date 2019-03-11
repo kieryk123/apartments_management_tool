@@ -27,8 +27,8 @@
             <div class="form__col">
                 <label class="label">Choose apartment:</label>
                 <v-select
-                    :value="apartmentsList[apartmentId]"
-                    :options="apartmentsList"
+                    :value="selectOptions[0]"
+                    :options="selectOptions"
                     :onChange="handleChooseApartment">
                 </v-select>
             </div>
@@ -48,14 +48,14 @@ export default {
         startDate: '',
         endDate: '',
         contactNumber: '',
-        apartmentId: 0
+        apartmentId: ''
     }),
     computed: {
-        apartmentsList() {
-            const selectOptions = this.$store.getters.apartmentsList.map((el, index) => {
+        selectOptions() {
+            const selectOptions = this.$store.getters.apartmentsList.map(apartment => {
                 return {
-                    label: el.name,
-                    value: index
+                    label: apartment.name,
+                    value: apartment.id
                 }
             });
 

@@ -49,7 +49,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import Dropdown from '@/components/Dropdown.vue';
 
 export default {

@@ -23,5 +23,9 @@ Vue.filter('formatDate', (date) => {
 new Vue({
     router,
     store,
-    render: h => h(App)
+    render: h => h(App),
+    created() {
+        this.$store.dispatch('getApartments');
+        this.$store.dispatch('getReservations');
+    }
 }).$mount('#app');

@@ -28,8 +28,8 @@
             <div class="form__col">
                 <label class="label">Choose apartment:</label>
                 <v-select
-                    :value="apartmentsList[apartmentId]"
-                    :options="apartmentsList"
+                    :value="currentSelectValue"
+                    :options="selectOptions"
                     :onChange="handleChooseApartment">
                 </v-select>
             </div>
@@ -43,14 +43,21 @@ import HotelDatePicker from 'vue-hotel-datepicker';
 import vSelect from 'vue-select';
 
 export default {
+    beforeRouteEnter (to, from, next) {
+        to.params.reservationId ? next() : next({ name: 'reservations' });
+    },
     created() {
+        const obj = { ...this.reservationsList.filter(el => el.id == this.$route.params.reservationId) };
+
         this.reservationId = this.$route.params.reservationId;
-        this.firstName = this.reservationsList[this.reservationId].customer.firstName;
-        this.lastName = this.reservationsList[this.reservationId].customer.lastName;
-        this.startDate = this.reservationsList[this.reservationId].startDate;
-        this.endDate = this.reservationsList[this.reservationId].endDate;
-        this.contactNumber = this.reservationsList[this.reservationId].customer.phone;
-        this.apartmentId = this.reservationsList[this.reservationId].apartmentId;
+        this.firstName = obj[0].customer.firstName;
+        this.lastName = obj[0].customer.lastName;
+        this.startDate = obj[0].startDate;
+        this.endDate = obj[0].endDate;
+        this.contactNumber = obj[0].customer.phone;
+        this.apartmentId = obj[0].apartmentId;
+
+        this.setCurrentSelectValue(obj[0].apartmentId);
     },
     data: () => ({
         reservationId: null,
@@ -59,17 +66,21 @@ export default {
         startDate: '',
         endDate: '',
         contactNumber: '',
-        apartmentId: 0
+        apartmentId: '',
+        currentSelectValue: ''
     }),
     computed: {
         reservationsList() {
             return this.$store.getters.reservationsList;
         },
         apartmentsList() {
-            const selectOptions = this.$store.getters.apartmentsList.map((el, index) => {
+            return this.$store.getters.apartmentsList;
+        },
+        selectOptions() {
+            const selectOptions = this.$store.getters.apartmentsList.map(apartment => {
                 return {
-                    label: el.name,
-                    value: index
+                    label: apartment.name,
+                    value: apartment.id
                 }
             });
 
@@ -84,7 +95,22 @@ export default {
             this.endDate = date;
         },
         handleChooseApartment(option) {
-            this.apartmentId = option.value;
+            // check if option is not undefined (vue-select fires onChange on init)
+            if (option.value != undefined) {
+                this.apartmentId = option.value;
+            }
+        },
+        setCurrentSelectValue(apartmentId) {
+            const selectValue = this.apartmentsList
+                .filter(el => el.id == apartmentId)
+                .map(el => {
+                    return {
+                        label: el.name,
+                        value: el.id
+                    }
+                });
+
+            this.currentSelectValue = selectValue;
         },
         submitForm() {
             const reservation = {

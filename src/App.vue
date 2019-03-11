@@ -11,9 +11,6 @@
 import Header from '@/components/Header.vue';
 
 export default {
-    created() {
-        this.$store.dispatch('getApartments');
-    },
     components: {
         Header
     }
