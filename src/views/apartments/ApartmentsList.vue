@@ -25,7 +25,7 @@
                         </span>
                     </th>
                     <th class="table__body-cell">{{ apartment.address }}</th>
-                    <th class="table__body-cell">£{{ apartment.pricePerNight }}</th>
+                    <th class="table__body-cell">£{{ apartment.pricePerNight | formatMoney }}</th>
                     <th class="table__body-cell">
                         <Dropdown
                             :menuItems="[

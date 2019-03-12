@@ -44,14 +44,14 @@ export default new Router({
         {
             path: '/reservations/add',
             name: 'add-reservation',
-            component: AddReservation,
-            beforeEnter: (to, from, next) => to.params.apartmentId ? next() : next({ name: 'reservations' })
+            component: AddReservation
         },
         {
             path: '/reservations/edit',
             name: 'edit-reservation',
             component: EditReservation,
-            props: true
+            props: true,
+            beforeEnter: (to, from, next) => to.params.reservationId ? next() : next({ name: 'reservations' })
         },
         {
             path: '*',

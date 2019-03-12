@@ -8,16 +8,8 @@ import store from './store/store';
 axios.defaults.baseURL = 'https://apartment-management-tool.firebaseio.com';
 
 // global filters
-Vue.filter('formatDate', (date) => {
-    date = new Date(date);
-
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    const day = date.getDate();
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
-
-    return `${day} ${month} ${year}`;
-});
+import './filters/formatDate.js';
+import './filters/formatMoney.js';
 
 
 new Vue({

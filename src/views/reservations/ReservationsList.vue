@@ -35,7 +35,7 @@
                             reservation.startDate,
                             reservation.endDate,
                             apartment(reservation.apartmentId).pricePerNight
-                        )
+                        ) | formatMoney
                     }}
                     </th>
                     <th class="table__body-cell">
