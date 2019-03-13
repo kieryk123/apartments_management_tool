@@ -35,7 +35,7 @@ export default {
     }),
     methods: {
         handleImageUpload(e) {
-            this.imageObject = window.URL.createObjectURL(e.target.files[0]);
+            this.imageObject = 'https://image.flaticon.com/icons/svg/147/147040.svg';
         },
         submitForm() {
             if (this.name == '' || this.address == '' || this.pricePerNight == null || this.imageObject == '') {

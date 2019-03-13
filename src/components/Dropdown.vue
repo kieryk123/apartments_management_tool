@@ -65,6 +65,7 @@ export default {
     &__menu {
         display: block;
         position: absolute;
+        z-index: 1;
         bottom: -75px;
         right: -4px;
         min-width: 155px;
