@@ -11,7 +11,6 @@ axios.defaults.baseURL = 'https://apartment-management-tool.firebaseio.com';
 import './filters/formatDate.js';
 import './filters/formatMoney.js';
 
-
 new Vue({
     router,
     store,
