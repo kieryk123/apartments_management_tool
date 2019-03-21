@@ -129,7 +129,7 @@ export default {
             if (disabledDates.length != 0) {
                 this.disabledDates = disabledDates;
             } else {
-                this.disabledDates = []
+                this.disabledDates = [];
             }
         }
     },
