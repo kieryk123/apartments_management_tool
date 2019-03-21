@@ -44,6 +44,7 @@
 <script>
 import HotelDatePicker from 'vue-hotel-datepicker';
 import vSelect from 'vue-select';
+import { getDatesBetween } from '@/utils/utils';
 
 export default {
     created() {
@@ -131,24 +132,6 @@ export default {
             this.$store.dispatch('editReservation', reservation);
             this.$router.push({ name: 'reservations' });
         },
-        getDatesBetween(startDate, endDate) {
-            startDate = new Date(startDate);
-            endDate = new Date(endDate);
-            let dates = [],
-            currentDate = startDate,
-            addDays = function(days) {
-                let date = new Date(this.valueOf());
-                date.setDate(date.getDate() + days);
-                return date;
-            };
-
-            while (currentDate <= endDate) {
-                dates.push(currentDate);
-                currentDate = addDays.call(currentDate, 1);
-            }
-
-            return dates.map((date) => new Date(date).toISOString().slice(0,10)).slice(1);
-        },
         setDisabledDates() {
             const { apartmentId, reservationsList, reservationId } = this;
             const reservations = reservationsList.filter((el) => el.apartmentId == apartmentId);
@@ -156,7 +139,7 @@ export default {
             let disabledDates = reservations
                 .filter((reservation) => reservation.id != reservationId)
                 .map((reservation) => {
-                    return this.getDatesBetween(reservation.startDate, reservation.endDate);
+                    return getDatesBetween(reservation.startDate, reservation.endDate);
                 });
 
             disabledDates = [ ...new Set(disabledDates.flat()) ];
