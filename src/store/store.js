@@ -104,8 +104,12 @@ export default new Vuex.Store({
 
                     for (let key in data) {
                         const reservation = data[key];
-                        reservation.id = key;
-                        reservations.push(reservation)
+
+                        // check if reservation is expired
+                        if (reservation.endDate >= new Date().toISOString()) {
+                            reservation.id = key;
+                            reservations.push(reservation)
+                        }
                     }
 
                     commit('GET_RESERVATIONS', reservations);

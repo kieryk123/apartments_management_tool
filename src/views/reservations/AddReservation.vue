@@ -16,6 +16,8 @@
                 <label class="label">Period of time:</label>
                 <HotelDatePicker
                     format="DD/MM/YYYY"
+                    :disabledDates="disabledDates"
+                    :key="disabledDates.length"
                     @check-in-changed="setStartDate"
                     @check-out-changed="setEndDate">
                 </HotelDatePicker>
@@ -48,9 +50,13 @@ export default {
         startDate: '',
         endDate: '',
         contactNumber: '',
-        apartmentId: ''
+        apartmentId: '',
+        disabledDates: []
     }),
     computed: {
+        reservationsList() {
+            return this.$store.getters.reservationsList;
+        },
         selectOptions() {
             const selectOptions = this.$store.getters.apartmentsList.map(apartment => {
                 return {
@@ -71,6 +77,7 @@ export default {
         },
         handleChooseApartment(option) {
             this.apartmentId = option.value;
+            this.setDisabledDates();
         },
         submitForm() {
             if (this.firstName == '' || this.lastName == '' || this.startDate == '' || this.endDate == '' || this.contactNumber == '') {
@@ -91,6 +98,39 @@ export default {
 
             this.$store.dispatch('addReservation', reservation);
             this.$router.push({ name: 'reservations' });
+        },
+        getDatesBetween(startDate, endDate) {
+            startDate = new Date(startDate);
+            endDate = new Date(endDate);
+            let dates = [],
+            currentDate = startDate,
+            addDays = function(days) {
+                let date = new Date(this.valueOf());
+                date.setDate(date.getDate() + days);
+                return date;
+            };
+
+            while (currentDate <= endDate) {
+                dates.push(currentDate);
+                currentDate = addDays.call(currentDate, 1);
+            }
+
+            return dates.map((date) => new Date(date).toISOString().slice(0,10)).slice(1);
+        },
+        setDisabledDates() {
+            const { apartmentId, reservationsList } = this;
+            const reservations = reservationsList.filter((el) => el.apartmentId == apartmentId);
+
+            let disabledDates = reservations.map((reservation) => {
+                return this.getDatesBetween(reservation.startDate, reservation.endDate);
+            });
+            disabledDates = [ ...new Set(disabledDates.flat()) ];
+
+            if (disabledDates.length != 0) {
+                this.disabledDates = disabledDates;
+            } else {
+                this.disabledDates = []
+            }
         }
     },
     components: {
