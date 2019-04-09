@@ -11,17 +11,14 @@
             >Actual month</button>
         </div>
         <div class="profits-comparison__tabs-wrapper">
-            <div
-                v-if="activeTab == 'previous'"
-                class="profits-comparison__tab"
-            >
-                <p class="profits-comparison__value">£{{ previousMonthValue | formatMoney }}</p>
-            </div>
-            <div
-                v-else-if="activeTab == 'actual'"
-                class="profits-comparison__tab"
-            >
-                <p class="profits-comparison__value">£{{ actualMonthValue | formatMoney }}</p>
+            <div class="profits-comparison__content">
+                <img
+                    width="80"
+                    height="auto"
+                    :src="require('@/images/icon-comparison.svg')"
+                    alt="">
+                <p class="profits-comparison__title">{{ new Date().getMonth() - 1 | getMonth }} vs {{ new Date().getMonth() | getMonth }}</p>
+                <p class="profits-comparison__value">£{{ value | formatMoney }}</p>
             </div>
         </div>
     </div>
@@ -31,7 +28,7 @@
 export default {
     props: ['previousMonthValue', 'actualMonthValue'],
     data: () => ({
-        activeTab: 'previous'
+        activeTab: 'actual'
     }),
     computed: {
         isPreviousTabActive() {
@@ -39,10 +36,10 @@ export default {
         },
         isActualTabActive() {
             return this.activeTab == 'actual' ? 'profits-comparison__btn--active' : null;
+        },
+        value() {
+            return this.activeTab == 'previous' ? this.previousMonthValue : this.actualMonthValue;
         }
     }
 }
 </script>
-
-<style lang="scss">
-</style>

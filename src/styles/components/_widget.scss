@@ -39,7 +39,7 @@
     }
 
     &__value {
-        font-size: 28px;
+        font-size: 34px;
         font-weight: 600;
         color: #1c2d41;
         margin-top: 0;
@@ -85,14 +85,29 @@
         }
     }
 
+    &__title {
+        font-size: 16px;
+        color: #1c2d41;
+        margin: 15px 0 15px 0;
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        &--center {
+            text-align: center;
+        }
+    }
+
     &__tabs-wrapper {
         height: calc(100% - 44px);
     }
 
-    &__tab {
+    &__content {
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
         height: 100%;
     }
 
