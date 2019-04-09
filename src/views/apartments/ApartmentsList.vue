@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+    <div v-if="dataIsLoaded" class="page">
         <div class="page__heading">
             <h1 class="page__heading-title">Apartments list ({{ apartmentsList.length }})</h1>
             <router-link
@@ -7,10 +7,7 @@
                 to="/apartments/add"
             >+ Add new apartment</router-link>
         </div>
-        <table
-            v-if="dataIsLoaded"
-            class="table"
-        >
+        <table class="table">
             <thead class="table__head">
                 <tr class="table__row">
                     <th class="table__head-cell table__head-cell--darker">Apartment name</th>
@@ -48,8 +45,8 @@
                 </tr>
             </tbody>
         </table>
-        <div v-else>Loading...</div>
     </div>
+    <div v-else>Loading...</div>
 </template>
 
 <script>

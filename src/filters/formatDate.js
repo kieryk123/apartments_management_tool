@@ -12,7 +12,7 @@ Vue.filter('formatDate', (date) => {
 });
 
 Vue.filter('getMonth', (monthNumber) => {
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const months = ["Januuary", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const month = months[monthNumber];
 
     return month;
