@@ -142,10 +142,14 @@ export default new Vuex.Store({
             return state.apartmentsList;
         },
         activeReservationsList(state) {
-            return state.reservationsList.filter(el => el.endDate >= new Date().toISOString());
+            const nowDate = new Date().toISOString();
+
+            return state.reservationsList.filter(el => new Date(el.endDate).toISOString() >= nowDate);
         },
         expiredReservationsList(state) {
-            return state.reservationsList.filter(el => el.endDate < new Date().toISOString());
+            const nowDate = new Date().toISOString();
+
+            return state.reservationsList.filter(el => new Date(el.endDate).toISOString() < nowDate);
         },
         totalProfit(state) {
             let totalProfit = 0;
