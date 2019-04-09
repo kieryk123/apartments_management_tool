@@ -55,7 +55,7 @@ export default new Vuex.Store({
                     state.reservationsList[i].endDate = payload.endDate;
                 }
             }
-        },
+        }
     },
     actions: {
         getApartments({commit}) {
@@ -70,8 +70,9 @@ export default new Vuex.Store({
                         apartments.push(apartment)
                     }
 
-                    commit('GET_APARTMENTS', apartments);
+                    return apartments;
                 })
+                .then(res => commit('GET_APARTMENTS', res))
                 .catch(err => console.log(err));
         },
         addApartment({commit}, apartment) {
@@ -104,16 +105,13 @@ export default new Vuex.Store({
 
                     for (let key in data) {
                         const reservation = data[key];
-
-                        // check if reservation is expired
-                        if (reservation.endDate >= new Date().toISOString()) {
-                            reservation.id = key;
-                            reservations.push(reservation)
-                        }
+                        reservation.id = key;
+                        reservations.push(reservation);
                     }
 
-                    commit('GET_RESERVATIONS', reservations);
+                    return reservations;
                 })
+                .then(res => commit('GET_RESERVATIONS', res))
                 .catch(err => console.log(err));
         },
         addReservation({commit}, reservation) {
@@ -143,8 +141,86 @@ export default new Vuex.Store({
         apartmentsList(state) {
             return state.apartmentsList;
         },
-        reservationsList(state) {
-            return state.reservationsList;
+        activeReservationsList(state) {
+            return state.reservationsList.filter(el => el.endDate >= new Date().toISOString());
+        },
+        expiredReservationsList(state) {
+            return state.reservationsList.filter(el => el.endDate < new Date().toISOString());
+        },
+        totalProfit(state) {
+            let totalProfit = 0;
+
+            if (
+                state.reservationsList.length > 0 &&
+                state.apartmentsList.length > 0
+            ) {
+                for (let i = 0; i < state.reservationsList.length; i++) {
+                    const startDate = new Date(state.reservationsList[i].startDate);
+                    const endDate = new Date(state.reservationsList[i].endDate);
+                    const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+                    const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                    const pricePerNight = state.apartmentsList.filter(el => el.id == state.reservationsList[i].apartmentId)[0].pricePerNight;
+                    const profit = dayDiff * pricePerNight;
+
+                    totalProfit += profit;
+                }
+            }
+
+            return totalProfit;
+        },
+        actualMonthProfit(state) {
+            const actualMonth = new Date().getMonth();
+            const actualMonthResrvations = state.reservationsList.filter(el => {
+                const reservationEndDate = new Date(el.endDate).getMonth();
+                return reservationEndDate == actualMonth;
+            });
+            let actualMonthProfit = 0;
+
+            if (
+                actualMonthResrvations.length > 0 &&
+                state.apartmentsList.length > 0
+            ) {
+                for (let i = 0; i < actualMonthResrvations.length; i++) {
+                    const startDate = new Date(actualMonthResrvations[i].startDate);
+                    const endDate = new Date(actualMonthResrvations[i].endDate);
+                    const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+                    const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                    const pricePerNight = state.apartmentsList.filter(el => el.id == actualMonthResrvations[i].apartmentId)[0].pricePerNight;
+                    const profit = dayDiff * pricePerNight;
+
+                    actualMonthProfit += profit;
+                }
+            }
+
+            return actualMonthProfit;
+        },
+        previousMonthProfit(state) {
+            let previousMonth = new Date().getMonth() - 1;
+            previousMonth < 0 ? previousMonth = 11 : null;
+
+            const previousMonthResrvations = state.reservationsList.filter(el => {
+                const reservationEndDate = new Date(el.endDate).getMonth();
+                return reservationEndDate == previousMonth;
+            });
+            let previousMonthProfit = 0;
+
+            if (
+                previousMonthResrvations.length > 0 &&
+                state.apartmentsList.length > 0
+            ) {
+                for (let i = 0; i < previousMonthResrvations.length; i++) {
+                    const startDate = new Date(previousMonthResrvations[i].startDate);
+                    const endDate = new Date(previousMonthResrvations[i].endDate);
+                    const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+                    const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                    const pricePerNight = state.apartmentsList.filter(el => el.id == previousMonthResrvations[i].apartmentId)[0].pricePerNight;
+                    const profit = dayDiff * pricePerNight;
+
+                    previousMonthProfit += profit;
+                }
+            }
+
+            return previousMonthProfit;
         }
     }
 });

@@ -35,7 +35,13 @@
                 </v-select>
             </div>
         </div>
-        <button class="btn btn--primary" @click="submitForm">Submit</button>
+        <div class="buttons-wrapper">
+            <button class="btn btn--primary" @click="submitForm">Submit</button>
+            <button
+                class="btn btn--secondary"
+                @click="$router.push({ name: 'reservations' })"
+            >Cancel</button>
+        </div>
     </div>
 </template>
 
@@ -55,8 +61,8 @@ export default {
         disabledDates: []
     }),
     computed: {
-        reservationsList() {
-            return this.$store.getters.reservationsList;
+        activeReservationsList() {
+            return this.$store.getters.activeReservationsList;
         },
         selectOptions() {
             const selectOptions = this.$store.getters.apartmentsList.map(apartment => {
@@ -101,8 +107,8 @@ export default {
             this.$router.push({ name: 'reservations' });
         },
         setDisabledDates() {
-            const { apartmentId, reservationsList } = this;
-            const reservations = reservationsList.filter((el) => el.apartmentId == apartmentId);
+            const { apartmentId, activeReservationsList } = this;
+            const reservations = activeReservationsList.filter((el) => el.apartmentId == apartmentId);
 
             let disabledDates = reservations.map((reservation) => {
                 return getDatesBetween(reservation.startDate, reservation.endDate);

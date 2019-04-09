@@ -1,6 +1,6 @@
 .btn {
     display: inline-block;
-    padding: 12px 25px;
+    padding: 12px 30px;
     border-radius: 8px;
     font-size: 16px;
     font-weight: 600;
@@ -18,5 +18,24 @@
     &--primary {
         background-color: #2dca73;
         color: white;
+    }
+
+    &--secondary {
+        background-color: #f0f0f0;
+        color: black;
+    }
+}
+
+.buttons-wrapper {
+    .btn {
+        margin: 0 10px;
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
     }
 }

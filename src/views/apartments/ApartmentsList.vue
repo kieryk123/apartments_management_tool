@@ -7,7 +7,10 @@
                 to="/apartments/add"
             >+ Add new apartment</router-link>
         </div>
-        <table class="table">
+        <table
+            v-if="dataIsLoaded"
+            class="table"
+        >
             <thead class="table__head">
                 <tr class="table__row">
                     <th class="table__head-cell table__head-cell--darker">Apartment name</th>
@@ -45,6 +48,7 @@
                 </tr>
             </tbody>
         </table>
+        <div v-else>Loading...</div>
     </div>
 </template>
 
@@ -52,12 +56,24 @@
 import Dropdown from '@/components/Dropdown.vue';
 
 export default {
+    created() {
+        this.apartmentsList.length > 0 ? this.dataIsLoaded = true : null;
+    },
     data: () => ({
-
+        dataIsLoaded: false
     }),
+    watch: {
+        apartmentsList(newVal, oldVal) {
+            newVal.length > 0 ? this.dataIsLoaded = true : null;
+        }
+    },
     methods: {
         handleDeleteApartment(id) {
-            this.$store.dispatch('deleteApartment', id);
+            const isBooked = this.activeReservationsList.some(el => el.apartmentId == id);
+
+            isBooked ?
+                alert('This apartment is in use. You cannot delete booked apartment.') :
+                this.$store.dispatch('deleteApartment', id);
         },
         goToRoute(route, apartmentId) {
             this.$router.push({ name: route, params: {apartmentId: apartmentId} });
@@ -66,6 +82,9 @@ export default {
     computed: {
         apartmentsList() {
             return this.$store.getters.apartmentsList;
+        },
+        activeReservationsList() {
+            return this.$store.getters.activeReservationsList;
         }
     },
     components: {

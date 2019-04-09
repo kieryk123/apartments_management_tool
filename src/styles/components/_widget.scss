@@ -1,0 +1,106 @@
+.widgets-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    max-height: 800px;
+    // margin-left: -20px; /* Adjustment for the gutter */
+    width: 100%;
+}
+
+.widget {
+    margin: 0 30px 30px 0; /* Some gutter */
+    background-color: #fff;
+    width: calc(25% - 20px);
+    min-width: 350px;
+    box-shadow: 0 0 40px -10px rgba(30,41,69,.2), 0 1px 2px 0 rgba(30,41,69,.1), 0 0 12px 0 rgba(30,41,69,.1);
+    border-radius: 8px;
+    padding: 20px;
+
+    &--hidden {
+        opacity: 0;
+    }
+}
+
+.total-profit {
+    text-align: center;
+    padding: 70px 30px;
+
+    &__title {
+        font-size: 16px;
+        color: #1c2d41;
+        margin: 15px 0 15px 0;
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        &--center {
+            text-align: center;
+        }
+    }
+
+    &__value {
+        font-size: 28px;
+        font-weight: 600;
+        color: #1c2d41;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+.profits-comparison {
+    text-align: center;
+    padding: 0 0;
+
+    &__btns-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__btn {
+        width: 50%;
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        background: rgba(#949fb1, 0);
+        border: 0;
+        box-shadow: none;
+        outline: 0;
+        border-bottom: 1px solid rgba(#949fb1, 0.35);
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &--active {
+            color: #0aafff;
+        }
+
+        &:first-child {
+            border-right: 0.5px solid rgba(#949fb1, 0.35);
+        }
+
+        &:last-child {
+            border-left: 0.5px solid rgba(#949fb1, 0.35);
+        }
+    }
+
+    &__tabs-wrapper {
+        height: calc(100% - 44px);
+    }
+
+    &__tab {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    &__value {
+        font-size: 34px;
+        font-weight: 600;
+        color: #1c2d41;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}

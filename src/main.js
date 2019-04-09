@@ -15,7 +15,7 @@ new Vue({
     router,
     store,
     render: h => h(App),
-    created() {
+    beforeCreate() {
         this.$store.dispatch('getApartments');
         this.$store.dispatch('getReservations');
     }

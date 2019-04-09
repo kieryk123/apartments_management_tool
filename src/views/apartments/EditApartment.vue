@@ -21,7 +21,13 @@
                 <input id="image" @change="handleImageUpload" class="input" type="file" placeholder="Photo">
             </div>
         </div>
-        <button class="btn btn--primary" @click="submitForm">Submit</button>
+        <div class="buttons-wrapper">
+            <button class="btn btn--primary" @click="submitForm">Submit</button>
+            <button
+                class="btn btn--secondary"
+                @click="$router.push({ name: 'apartments' })"
+            >Cancel</button>
+        </div>
     </div>
 </template>
 

@@ -37,7 +37,13 @@
                 </v-select>
             </div>
         </div>
-        <button class="btn btn--primary" @click="submitForm">Submit</button>
+        <div class="buttons-wrapper">
+            <button class="btn btn--primary" @click="submitForm">Submit</button>
+            <button
+                class="btn btn--secondary"
+                @click="$router.push({ name: 'reservations' })"
+            >Cancel</button>
+        </div>
     </div>
 </template>
 
@@ -48,7 +54,7 @@ import { getDatesBetween } from '@/utils/utils';
 
 export default {
     created() {
-        const obj = { ...this.reservationsList.filter(el => el.id == this.$route.params.reservationId) };
+        const obj = { ...this.activeReservationsList.filter(el => el.id == this.$route.params.reservationId) };
 
         this.reservationId = this.$route.params.reservationId;
         this.firstName = obj[0].customer.firstName;
@@ -72,8 +78,8 @@ export default {
         disabledDates: []
     }),
     computed: {
-        reservationsList() {
-            return this.$store.getters.reservationsList;
+        activeReservationsList() {
+            return this.$store.getters.activeReservationsList;
         },
         apartmentsList() {
             return this.$store.getters.apartmentsList;
@@ -133,8 +139,8 @@ export default {
             this.$router.push({ name: 'reservations' });
         },
         setDisabledDates() {
-            const { apartmentId, reservationsList, reservationId } = this;
-            const reservations = reservationsList.filter((el) => el.apartmentId == apartmentId);
+            const { apartmentId, activeReservationsList, reservationId } = this;
+            const reservations = activeReservationsList.filter((el) => el.apartmentId == apartmentId);
 
             let disabledDates = reservations
                 .filter((reservation) => reservation.id != reservationId)

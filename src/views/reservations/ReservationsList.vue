@@ -1,13 +1,16 @@
 <template>
     <div class="page">
         <div class="page__heading">
-            <h1 class="page__heading-title">Reservations list ({{ reservationsList.length }})</h1>
+            <h1 class="page__heading-title">Reservations list ({{ activeReservationsList.length }})</h1>
             <router-link
                 class="btn btn--primary"
                 to="/reservations/add"
             >+ Add new reservation</router-link>
         </div>
-        <table class="table">
+        <table
+            v-if="dataIsLoaded"
+            class="table"
+        >
             <thead class="table__head">
                 <tr class="table__row">
                     <th class="table__head-cell table__head-cell--darker">Apartment</th>
@@ -19,7 +22,7 @@
                 </tr>
             </thead>
             <tbody class="table__body">
-                <tr v-for="(reservation, index) in reservationsList" :key="index" class="table__row">
+                <tr v-for="(reservation, index) in activeReservationsList" :key="index" class="table__row">
                     <th class="table__body-cell table__body-cell--name">
                         <img class="table__img" width="56px" height="56px" :src="require('@/images/default_apartment_img.jpg')" alt="">
                         <span class="table__info-wrapper">
@@ -63,6 +66,7 @@
                 </tr>
             </tbody>
         </table>
+        <div v-else>Loading...</div>
     </div>
 </template>
 
@@ -70,9 +74,17 @@
 import Dropdown from '@/components/Dropdown.vue';
 
 export default {
+    created() {
+        this.apartmentsList.length > 0 ? this.dataIsLoaded = true : null;
+    },
     data: () => ({
-
+        dataIsLoaded: false
     }),
+    watch: {
+        apartmentsList(newVal, oldVal) {
+            newVal.length > 0 ? this.dataIsLoaded = true : null;
+        }
+    },
     methods: {
         handleDeleteReservation(id) {
             this.$store.dispatch('deleteReservation', id);
@@ -96,8 +108,8 @@ export default {
         }
     },
     computed: {
-        reservationsList() {
-            return this.$store.getters.reservationsList;
+        activeReservationsList() {
+            return this.$store.getters.activeReservationsList;
         },
         apartmentsList() {
             return this.$store.getters.apartmentsList;
