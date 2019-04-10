@@ -119,3 +119,23 @@
         margin-bottom: 0;
     }
 }
+
+.upcoming-reservation {
+    text-align: center;
+
+    &__title {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    &__customer {
+        strong {
+            font-weight: 600;
+        }
+
+        a {
+            color: #0aafff;
+            text-decoration: none;
+        }
+    }
+}

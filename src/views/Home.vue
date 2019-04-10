@@ -9,6 +9,8 @@
                 :actualMonthValue="actualMonthProfit"
                 :previousMonthValue="previousMonthProfit"
             />
+            <UpcomingReservation
+                :reservationData="upcomingReservation"/>
         </div>
     </div>
     <div v-else>Loading...</div>
@@ -17,6 +19,7 @@
 <script>
     import TotalProfit from '@/components/widgets/TotalProfit.vue';
     import ProfitsComparison from '@/components/widgets/ProfitsComparison.vue';
+    import UpcomingReservation from '@/components/widgets/UpcomingReservation.vue';
 
     export default {
         created() {
@@ -39,11 +42,15 @@
             },
             previousMonthProfit() {
                 return this.$store.getters.previousMonthProfit;
+            },
+            upcomingReservation() {
+                return this.$store.getters.upcomingReservation;
             }
         },
         components: {
             TotalProfit,
-            ProfitsComparison
+            ProfitsComparison,
+            UpcomingReservation
         }
     }
 </script>

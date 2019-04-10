@@ -225,6 +225,25 @@ export default new Vuex.Store({
             }
 
             return previousMonthProfit;
+        },
+        upcomingReservation(state, getters) {
+            const today = new Date();
+            const upcomingReservationsList = getters.activeReservationsList.filter(item => new Date(item.startDate) >= today);
+            const closestReservation = upcomingReservationsList.reduce((itemA, itemB) => itemA.startDate.Date - today < itemB.startDate.Date - today ? itemA : itemB);
+            const apartmentName = state.apartmentsList.find(apartment => apartment.id === closestReservation.apartmentId).name;
+
+            const upcomingReservation = {
+                apartmentName: apartmentName,
+                startDate: closestReservation.startDate,
+                endDate: closestReservation.endDate,
+                customer: {
+                    firstName: closestReservation.customer.firstName,
+                    lastName: closestReservation.customer.lastName,
+                    phone: closestReservation.customer.phone
+                }
+            };
+
+            return upcomingReservation;
         }
     }
 });
