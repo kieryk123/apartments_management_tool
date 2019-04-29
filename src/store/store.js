@@ -128,29 +128,38 @@ export default new Vuex.Store({
                 pricePerNight: data.pricePerNight
             };
 
-            axios.put(`/apartments/${data.id}.json/`, apartment)
-                .then(() => {
-                    const filename = data.image.name;
-                    const ext = filename.slice(filename.lastIndexOf('.') + 1);
-                    return firebase.storage().ref(`apartments/${data.id}.${ext}`).put(data.image);
-                })
-                .then(file => {
-                    let imageUrl = file.ref.getDownloadURL()
-                        .then(url => {
-                            firebase.database().ref('apartments').child(data.id).update({imageUrl: url});
-                            return url;
-                        });
+            if (!data.image) {
+                const imageUrl = data.imageUrl;
+                const finalData = {
+                    ...apartment,
+                    imageUrl
+                };
+                commit('EDIT_APARTMENT', finalData);
+            } else {
+                axios.put(`/apartments/${data.id}.json/`, apartment)
+                    .then(() => {
+                        const filename = data.image.name;
+                        const ext = filename.slice(filename.lastIndexOf('.') + 1);
+                        return firebase.storage().ref(`apartments/${data.id}.${ext}`).put(data.image);
+                    })
+                    .then(file => {
+                        let imageUrl = file.ref.getDownloadURL()
+                            .then(url => {
+                                firebase.database().ref('apartments').child(data.id).update({imageUrl: url});
+                                return url;
+                            });
 
-                    return imageUrl;
-                })
-                .then(imageUrl => {
-                    const finalData = {
-                        ...apartment,
-                        imageUrl
-                    };
-                    commit('EDIT_APARTMENT', finalData);
-                })
-                .catch(err => console.log(err));
+                        return imageUrl;
+                    })
+                    .then(imageUrl => {
+                        const finalData = {
+                            ...apartment,
+                            imageUrl
+                        };
+                        commit('EDIT_APARTMENT', finalData);
+                    })
+                    .catch(err => console.log(err));
+            }
         },
         getReservations({commit}) {
             axios.get('/reservations.json')

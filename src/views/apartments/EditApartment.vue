@@ -80,13 +80,22 @@ export default {
             this.image = file;
         },
         submitForm() {
+            if (
+                this.name == '' ||
+                this.address == '' ||
+                this.pricePerNight == null
+            ) {
+                alert('All fields are required!');
+                return;
+            }
+
             const apartment = {
                 id: this.apartmentId,
                 name: this.name,
                 address: this.address,
                 pricePerNight: this.pricePerNight,
-                image: this.image,
-                // imageUrl: this.imageUrl
+                imageUrl: this.imageUrl,
+                image: this.image
             };
 
             this.$store.dispatch('editApartment', apartment);
