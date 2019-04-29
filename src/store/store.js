@@ -199,7 +199,9 @@ export default new Vuex.Store({
         activeReservationsList(state) {
             const nowDate = new Date().toISOString();
 
-            return state.reservationsList.filter(el => new Date(el.endDate).toISOString() >= nowDate);
+            return state.reservationsList
+                        .filter(el => new Date(el.endDate).toISOString() >= nowDate)
+                        .sort((itemA, itemB) => new Date(itemA.startDate) > new Date(itemB.startDate));
         },
         expiredReservationsList(state) {
             const nowDate = new Date().toISOString();
