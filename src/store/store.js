@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import firebase from 'firebase';
 
 Vue.use(Vuex);
 
@@ -28,7 +29,7 @@ export default new Vuex.Store({
                     state.apartmentsList[i].name = payload.name;
                     state.apartmentsList[i].address = payload.address;
                     state.apartmentsList[i].pricePerNight = payload.pricePerNight;
-                    state.apartmentsList[i].imageObject = payload.imageObject;
+                    state.apartmentsList[i].imageUrl = payload.imageUrl;
                 }
             }
         },
@@ -75,11 +76,40 @@ export default new Vuex.Store({
                 .then(res => commit('GET_APARTMENTS', res))
                 .catch(err => console.log(err));
         },
-        addApartment({commit}, apartment) {
+        addApartment({commit}, payload) {
+            const apartment = {
+                name: payload.name,
+                address: payload.address,
+                pricePerNight: payload.pricePerNight
+            };
+            let id;
+
             axios.post('/apartments.json', apartment)
                 .then(res => {
-                    apartment.id = res.data.name;
-                    commit('ADD_APARTMENT', apartment);
+                    id = res.data.name;
+                    return id;
+                })
+                .then(id => {
+                    const filename = payload.image.name;
+                    const ext = filename.slice(filename.lastIndexOf('.') + 1);
+                    return firebase.storage().ref(`apartments/${id}.${ext}`).put(payload.image);
+                })
+                .then(file => {
+                    let imageUrl = file.ref.getDownloadURL()
+                        .then(url => {
+                            firebase.database().ref('apartments').child(id).update({imageUrl: url});
+                            return url;
+                        });
+
+                    return imageUrl;
+                })
+                .then(imageUrl => {
+                    const finalApartment = {
+                        ...apartment,
+                        id,
+                        imageUrl
+                    };
+                    commit('ADD_APARTMENT', finalApartment);
                 })
                 .catch(err => console.log(err));
         },
@@ -91,9 +121,34 @@ export default new Vuex.Store({
                 .catch(err => console.log(err));
         },
         editApartment({commit}, data) {
-            axios.put(`/apartments/${data.id}.json/`, data)
-                .then(res => {
-                    commit('EDIT_APARTMENT', data);
+            const apartment = {
+                id: data.id,
+                name: data.name,
+                address: data.address,
+                pricePerNight: data.pricePerNight
+            };
+
+            axios.put(`/apartments/${data.id}.json/`, apartment)
+                .then(() => {
+                    const filename = data.image.name;
+                    const ext = filename.slice(filename.lastIndexOf('.') + 1);
+                    return firebase.storage().ref(`apartments/${data.id}.${ext}`).put(data.image);
+                })
+                .then(file => {
+                    let imageUrl = file.ref.getDownloadURL()
+                        .then(url => {
+                            firebase.database().ref('apartments').child(data.id).update({imageUrl: url});
+                            return url;
+                        });
+
+                    return imageUrl;
+                })
+                .then(imageUrl => {
+                    const finalData = {
+                        ...apartment,
+                        imageUrl
+                    };
+                    commit('EDIT_APARTMENT', finalData);
                 })
                 .catch(err => console.log(err));
         },
@@ -227,9 +282,13 @@ export default new Vuex.Store({
             return previousMonthProfit;
         },
         upcomingReservation(state, getters) {
+            if (getters.activeReservationsList.length <= 0) {
+                return false;
+            }
+
             const today = new Date();
             const upcomingReservationsList = getters.activeReservationsList.filter(item => new Date(item.startDate) >= today);
-            const closestReservation = upcomingReservationsList.reduce((itemA, itemB) => itemA.startDate.Date - today < itemB.startDate.Date - today ? itemA : itemB);
+            const closestReservation = upcomingReservationsList.reduce((itemA, itemB) => new Date(itemA.startDate) - today < new Date(itemB.startDate) - today ? itemA : itemB);
             const apartmentName = state.apartmentsList.find(apartment => apartment.id === closestReservation.apartmentId).name;
 
             const upcomingReservation = {

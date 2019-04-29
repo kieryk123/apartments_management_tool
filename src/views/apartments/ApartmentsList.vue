@@ -19,7 +19,7 @@
             <tbody class="table__body">
                 <tr v-for="apartment in apartmentsList" :key="apartment.id" class="table__row">
                     <th class="table__body-cell table__body-cell--name">
-                        <img class="table__img" width="56px" height="56px" :src="require('@/images/default_apartment_img.jpg')" alt="">
+                        <img class="table__img" width="56px" height="56px" :src="apartment.imageUrl" alt="">
                         <span class="table__info-wrapper">
                             <span class="table__main-text">{{ apartment.name }}</span>
                         </span>

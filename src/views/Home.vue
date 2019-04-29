@@ -10,6 +10,7 @@
                 :previousMonthValue="previousMonthProfit"
             />
             <UpcomingReservation
+                v-if="upcomingReservation"
                 :reservationData="upcomingReservation"/>
         </div>
     </div>
@@ -17,40 +18,40 @@
 </template>
 
 <script>
-    import TotalProfit from '@/components/widgets/TotalProfit.vue';
-    import ProfitsComparison from '@/components/widgets/ProfitsComparison.vue';
-    import UpcomingReservation from '@/components/widgets/UpcomingReservation.vue';
+import TotalProfit from '@/components/widgets/TotalProfit.vue';
+import ProfitsComparison from '@/components/widgets/ProfitsComparison.vue';
+import UpcomingReservation from '@/components/widgets/UpcomingReservation.vue';
 
-    export default {
-        created() {
+export default {
+    created() {
+        this.totalProfit > 0 ? this.dataIsLoaded = true : null;
+    },
+    data: () => ({
+        dataIsLoaded: false
+    }),
+    watch: {
+        totalProfit() {
             this.totalProfit > 0 ? this.dataIsLoaded = true : null;
-        },
-        data: () => ({
-            dataIsLoaded: false
-        }),
-        watch: {
-            totalProfit() {
-                this.totalProfit > 0 ? this.dataIsLoaded = true : null;
-            }
-        },
-        computed: {
-            totalProfit() {
-                return this.$store.getters.totalProfit;
-            },
-            actualMonthProfit() {
-                return this.$store.getters.actualMonthProfit;
-            },
-            previousMonthProfit() {
-                return this.$store.getters.previousMonthProfit;
-            },
-            upcomingReservation() {
-                return this.$store.getters.upcomingReservation;
-            }
-        },
-        components: {
-            TotalProfit,
-            ProfitsComparison,
-            UpcomingReservation
         }
+    },
+    computed: {
+        totalProfit() {
+            return this.$store.getters.totalProfit;
+        },
+        actualMonthProfit() {
+            return this.$store.getters.actualMonthProfit;
+        },
+        previousMonthProfit() {
+            return this.$store.getters.previousMonthProfit;
+        },
+        upcomingReservation() {
+            return this.$store.getters.upcomingReservation;
+        }
+    },
+    components: {
+        TotalProfit,
+        ProfitsComparison,
+        UpcomingReservation
     }
+}
 </script>

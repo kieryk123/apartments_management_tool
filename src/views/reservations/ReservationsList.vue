@@ -21,7 +21,7 @@
             <tbody class="table__body">
                 <tr v-for="(reservation, index) in activeReservationsList" :key="index" class="table__row">
                     <th class="table__body-cell table__body-cell--name">
-                        <img class="table__img" width="56px" height="56px" :src="require('@/images/default_apartment_img.jpg')" alt="">
+                        <img class="table__img" width="56px" height="56px" :src="apartment(reservation.apartmentId).imageUrl" alt="">
                         <span class="table__info-wrapper">
                             <span class="table__main-text">{{ apartment(reservation.apartmentId).name }}</span>
                             <span class="table__additional-text">{{ apartment(reservation.apartmentId).address }}</span>

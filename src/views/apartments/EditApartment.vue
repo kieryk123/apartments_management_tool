@@ -18,7 +18,13 @@
             </div>
             <div class="form__col">
                 <label class="label" for="image">Apartment image:</label>
-                <input id="image" @change="handleImageUpload" class="input" type="file" placeholder="Photo">
+                <input
+                    id="image"
+                    @change="handleImageUpload"
+                    class="input"
+                    type="file"
+                    placeholder="Photo">
+                <img :src="imageUrl" alt="" width="100%" height="auto">
             </div>
         </div>
         <div class="buttons-wrapper">
@@ -40,14 +46,15 @@ export default {
         this.name = obj[0].name;
         this.address = obj[0].address;
         this.pricePerNight = obj[0].pricePerNight;
-        this.imageObject = obj[0].imageObject;
+        this.imageUrl = obj[0].imageUrl;
     },
     data: () => ({
         apartmentId: null,
         name: '',
         address: '',
         pricePerNight: null,
-        imageObject: null
+        imageUrl: '',
+        image: null
     }),
     computed: {
         apartmentsList() {
@@ -56,7 +63,21 @@ export default {
     },
     methods: {
         handleImageUpload(e) {
-            this.imageObject = 'https://image.flaticon.com/icons/svg/147/147040.svg';
+            const file = e.target.files[0];
+            const name = file.name;
+
+            if (name.lastIndexOf('.') <= 0) {
+                alert('Please add a valid file!');
+            }
+
+            const fileReader = new FileReader();
+
+            fileReader.addEventListener('load', (e) => {
+                this.imageUrl = fileReader.result;
+            });
+            fileReader.readAsDataURL(file);
+
+            this.image = file;
         },
         submitForm() {
             const apartment = {
@@ -64,8 +85,9 @@ export default {
                 name: this.name,
                 address: this.address,
                 pricePerNight: this.pricePerNight,
-                imageObject: this.imageObject
-            }
+                image: this.image,
+                // imageUrl: this.imageUrl
+            };
 
             this.$store.dispatch('editApartment', apartment);
             this.$router.push({ name: 'apartments' });

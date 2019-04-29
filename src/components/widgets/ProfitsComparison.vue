@@ -17,7 +17,7 @@
                     height="auto"
                     :src="require('@/images/icon-comparison.svg')"
                     alt="">
-                <p class="profits-comparison__title">Profit for {{ month | getMonth }} <span v-if="activeTab == 'actual'">({{ percentage }})</span></p>
+                <p class="profits-comparison__title">Profit for {{ month | getMonth }} <span v-if="activeTab == 'actual' && previousMonthValue != 0">({{ percentage }})</span></p>
                 <p class="profits-comparison__value">£{{ value | formatMoney }}</p>
             </div>
         </div>

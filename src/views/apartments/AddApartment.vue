@@ -18,7 +18,13 @@
             </div>
             <div class="form__col">
                 <label class="label" for="image">Apartment image:</label>
-                <input id="image" @change="handleImageUpload" class="input" type="file" placeholder="Photo">
+                <input
+                    id="image"
+                    @change="handleImageUpload"
+                    class="input"
+                    type="file"
+                    placeholder="Photo">
+                <img :src="imageUrl" alt="" width="100%" height="auto">
             </div>
         </div>
         <div class="buttons-wrapper">
@@ -37,14 +43,34 @@ export default {
         name: '',
         address: '',
         pricePerNight: null,
-        imageObject: ''
+        imageUrl: '',
+        image: null
     }),
     methods: {
         handleImageUpload(e) {
-            this.imageObject = 'https://image.flaticon.com/icons/svg/147/147040.svg';
+            const file = e.target.files[0];
+            const name = file.name;
+
+            if (name.lastIndexOf('.') <= 0) {
+                alert('Please add a valid file!');
+            }
+
+            const fileReader = new FileReader();
+
+            fileReader.addEventListener('load', (e) => {
+                this.imageUrl = fileReader.result;
+            });
+            fileReader.readAsDataURL(file);
+
+            this.image = file;
         },
         submitForm() {
-            if (this.name == '' || this.address == '' || this.pricePerNight == null || this.imageObject == '') {
+            if (
+                this.name == '' ||
+                this.address == '' ||
+                this.pricePerNight == null ||
+                this.image == null
+            ) {
                 alert('All fields are required!');
                 return;
             }
@@ -53,7 +79,7 @@ export default {
                 name: this.name,
                 address: this.address,
                 pricePerNight: this.pricePerNight,
-                imageObject: this.imageObject
+                image: this.image
             }
 
             this.$store.dispatch('addApartment', apartment);
