@@ -1,12 +1,20 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
-import ApartmentsList from './views/apartments/ApartmentsList.vue';
-import AddApartment from './views/apartments/AddApartment.vue';
-import EditApartment from './views/apartments/EditApartment.vue';
-import ReservationsList from './views/reservations/ReservationsList.vue';
-import AddReservation from './views/reservations/AddReservation.vue';
-import EditReservation from './views/reservations/EditReservation.vue';
+// import Home from './views/Home.vue';
+// import ApartmentsList from './views/apartments/ApartmentsList.vue';
+// import AddApartment from './views/apartments/AddApartment.vue';
+// import EditApartment from './views/apartments/EditApartment.vue';
+// import ReservationsList from './views/reservations/ReservationsList.vue';
+// import AddReservation from './views/reservations/AddReservation.vue';
+// import EditReservation from './views/reservations/EditReservation.vue';
+
+const Home = () => import('./views/Home.vue');
+const ApartmentsList = () => import('./views/apartments/ApartmentsList.vue');
+const AddApartment = () => import('./views/apartments/AddApartment.vue');
+const EditApartment = () => import('./views/apartments/EditApartment.vue');
+const ReservationsList = () => import('./views/reservations/ReservationsList.vue');
+const AddReservation = () => import('./views/reservations/AddReservation.vue');
+const EditReservation = () => import('./views/reservations/EditReservation.vue');
 
 Vue.use(Router);
 
