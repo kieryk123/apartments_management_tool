@@ -1,3 +1,4 @@
+@import "_mixins";
 @import "components/_btn";
 @import "components/_header";
 @import "components/_table";
@@ -20,8 +21,16 @@ body {
 
 .app {
     &__view-wrapper {
-        height: calc(100vh - 166px);
         padding: 50px 60px;
+        margin-top: 66px;
+
+        @include breakpoint(md) {
+            padding: 30px 45px;
+        }
+
+        @include breakpoint(sm) {
+            padding: 15px 15px;
+        }
     }
 }
 
@@ -32,6 +41,12 @@ body {
         justify-content: space-between;
         align-items: center;
         margin-bottom: 50px;
+
+        @include breakpoint(sm) {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
     }
 
     &__heading-title {

@@ -1,7 +1,7 @@
 .widgets-wrapper {
     display: flex;
     flex-flow: row wrap;
-    max-height: 800px;
+    // max-height: 800px;
     // margin-left: -20px; /* Adjustment for the gutter */
     width: 100%;
 }
@@ -14,6 +14,10 @@
     box-shadow: 0 0 40px -10px rgba(30,41,69,.2), 0 1px 2px 0 rgba(30,41,69,.1), 0 0 12px 0 rgba(30,41,69,.1);
     border-radius: 8px;
     padding: 20px;
+
+    @include breakpoint(sm) {
+        min-width: 100%;
+    }
 
     &--hidden {
         opacity: 0;
@@ -109,6 +113,7 @@
         align-items: center;
         flex-direction: column;
         height: 100%;
+        padding: 30px 25px;
     }
 
     &__value {

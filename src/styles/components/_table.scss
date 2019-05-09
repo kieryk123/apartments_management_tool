@@ -1,5 +1,10 @@
+.table-wrapper {
+    overflow: scroll;
+}
+
 .table {
     width: 100%;
+    min-width: 960px;
     border-collapse: collapse;
     border-radius: 10px;
     // overflow: hidden;

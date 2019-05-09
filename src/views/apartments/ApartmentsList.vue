@@ -7,44 +7,46 @@
                 to="/apartments/add"
             >+ Add new apartment</router-link>
         </div>
-        <table class="table">
-            <thead class="table__head">
-                <tr class="table__row">
-                    <th class="table__head-cell table__head-cell--darker">Apartment name</th>
-                    <th class="table__head-cell">Address</th>
-                    <th class="table__head-cell">Price per night</th>
-                    <th class="table__head-cell"></th>
-                </tr>
-            </thead>
-            <tbody class="table__body">
-                <tr v-for="apartment in apartmentsList" :key="apartment.id" class="table__row">
-                    <th class="table__body-cell table__body-cell--name">
-                        <img class="table__img" width="56px" height="56px" :src="apartment.imageUrl" alt="">
-                        <span class="table__info-wrapper">
-                            <span class="table__main-text">{{ apartment.name }}</span>
-                        </span>
-                    </th>
-                    <th class="table__body-cell">{{ apartment.address }}</th>
-                    <th class="table__body-cell">£{{ apartment.pricePerNight | formatMoney }}</th>
-                    <th class="table__body-cell">
-                        <Dropdown
-                            :menuItems="[
-                                {
-                                    title: 'Edit apartment',
-                                    action: () => goToRoute('edit-apartment', apartment.id),
-                                    strong: false
-                                },
-                                {
-                                    title: 'Delete apartment',
-                                    action: () => handleDeleteApartment(apartment.id),
-                                    strong: true
-                                }
-                            ]"
-                        />
-                    </th>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-wrapper">
+            <table class="table">
+                <thead class="table__head">
+                    <tr class="table__row">
+                        <th class="table__head-cell table__head-cell--darker">Apartment name</th>
+                        <th class="table__head-cell">Address</th>
+                        <th class="table__head-cell">Price per night</th>
+                        <th class="table__head-cell"></th>
+                    </tr>
+                </thead>
+                <tbody class="table__body">
+                    <tr v-for="apartment in apartmentsList" :key="apartment.id" class="table__row">
+                        <th class="table__body-cell table__body-cell--name">
+                            <img class="table__img" width="56px" height="56px" :src="apartment.imageUrl" alt="">
+                            <span class="table__info-wrapper">
+                                <span class="table__main-text">{{ apartment.name }}</span>
+                            </span>
+                        </th>
+                        <th class="table__body-cell">{{ apartment.address }}</th>
+                        <th class="table__body-cell">£{{ apartment.pricePerNight | formatMoney }}</th>
+                        <th class="table__body-cell">
+                            <Dropdown
+                                :menuItems="[
+                                    {
+                                        title: 'Edit apartment',
+                                        action: () => goToRoute('edit-apartment', apartment.id),
+                                        strong: false
+                                    },
+                                    {
+                                        title: 'Delete apartment',
+                                        action: () => handleDeleteApartment(apartment.id),
+                                        strong: true
+                                    }
+                                ]"
+                            />
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div v-else>Loading...</div>
 </template>
