@@ -3,13 +3,15 @@ import App from './App.vue';
 import axios from 'axios';
 import router from './router';
 import store from './store/store';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/storage';
+import { FIREBASE_KEY } from './API_KEYS';
 
 // axios config
 axios.defaults.baseURL = 'https://apartment-management-tool.firebaseio.com';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAUACAE5HvijUiU--UvaHcxjyhBvNTNK1M",
+    apiKey: FIREBASE_KEY,
     authDomain: "apartment-management-tool.firebaseapp.com",
     databaseURL: "https://apartment-management-tool.firebaseio.com",
     projectId: "apartment-management-tool",

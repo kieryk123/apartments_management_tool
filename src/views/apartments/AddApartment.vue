@@ -31,7 +31,7 @@
             <button class="btn btn--primary" @click="submitForm">Submit</button>
             <button
                 class="btn btn--secondary"
-                @click="$router.push({ name: 'reservations' })"
+                @click="$router.push({ name: 'apartments' })"
             >Cancel</button>
         </div>
     </div>
