@@ -68,6 +68,10 @@ export default {
     computed: {
         activeReservationsList() {
             const compare = (a, b) => {
+                let itemA;
+                let itemB;
+
+                // check if its apartment or customer
                 if (this.sortBy === 'name') {
                     a = a['apartment'][this.sortBy];
                     b = b['apartment'][this.sortBy];
@@ -79,13 +83,25 @@ export default {
                     b = b[this.sortBy];
                 }
 
-                if (a.toString().toLowerCase() < b.toString().toLowerCase())
+                // check if its number type
+                if (
+                    typeof a === 'number' &&
+                    typeof b === 'number'
+                ) {
+                    itemA = a;
+                    itemB = b;
+                } else {
+                    itemA = a.toString().toLowerCase();
+                    itemB = b.toString().toLowerCase();
+                }
+
+                if (itemA < itemB)
                     return this.order;
-                if (a.toString().toLowerCase() > b.toString().toLowerCase())
+                if (itemA > itemB)
                     return -this.order;
                 return 0;
             }
-            // .slice() makes copy of array instead mutating original array
+
             const calculatedReservations = this.data.map((el, index) => {
                 return {
                     id: el.id,
@@ -105,8 +121,8 @@ export default {
                 }
             });
 
+            // .slice() makes copy of array instead mutating original array
             return calculatedReservations.slice(0).sort(compare);
-            // return calculatedReservations;
         },
         apartmentsList() {
             return this.$store.getters.apartmentsList;
@@ -125,7 +141,6 @@ export default {
             } else {
                 this.order = -1;
             }
-
 
             this.sortBy = field2 ? field2 : field1;
         },

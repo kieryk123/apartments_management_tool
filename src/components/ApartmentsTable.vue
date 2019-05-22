@@ -65,9 +65,23 @@ export default {
     computed: {
         apartmentsList() {
             const compare = (a, b) => {
-                if (a[this.sortBy].toString().toLowerCase() < b[this.sortBy].toString().toLowerCase())
+                let itemA;
+                let itemB;
+
+                if (
+                    typeof a[this.sortBy] === 'number' &&
+                    typeof b[this.sortBy] === 'number'
+                ) {
+                    itemA = a[this.sortBy];
+                    itemB = b[this.sortBy];
+                } else {
+                    itemA = a[this.sortBy].toString().toLowerCase();
+                    itemB = b[this.sortBy].toString().toLowerCase();
+                }
+
+                if (itemA < itemB)
                     return this.order;
-                if (a[this.sortBy].toString().toLowerCase() > b[this.sortBy].toString().toLowerCase())
+                if (itemA > itemB)
                     return -this.order;
                 return 0;
             }
