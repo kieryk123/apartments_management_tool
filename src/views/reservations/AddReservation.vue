@@ -90,6 +90,15 @@ export default {
         handleChooseApartment(option) {
             this.apartmentId = option.value;
             this.setDisabledDates();
+            this.checkIfDatesAreBooked();
+        },
+        checkIfDatesAreBooked() {
+            if (
+                this.disabledDates.includes(this.startDate) || this.disabledDates.includes(this.endDate)
+            ) {
+                this.setStartDate('');
+                this.setEndDate('');
+            }
         },
         submitForm() {
             if (this.firstName == '' || this.lastName == '' || this.startDate == '' || this.endDate == '' || this.contactNumber == '') {
