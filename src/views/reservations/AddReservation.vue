@@ -51,6 +51,9 @@ import vSelect from 'vue-select';
 import { getDatesBetween } from '@/utils/utils';
 
 export default {
+    created() {
+        this.setDisabledDates();
+    },
     data: () => ({
         firstName: '',
         lastName: '',
@@ -77,9 +80,11 @@ export default {
     },
     methods: {
         setStartDate(date) {
+            // jesli data jest w disabledDates to wyzerować ją
             this.startDate = date;
         },
         setEndDate(date) {
+            // jesli data jest w disabledDates to wyzerować ją
             this.endDate = date;
         },
         handleChooseApartment(option) {

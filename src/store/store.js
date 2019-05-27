@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import firebase from 'firebase';
+import ApartmentsService from '@/services/ApartmentsService.js';
+import ReservationsService from '@/services/ReservationsService.js';
 
 Vue.use(Vuex);
 
@@ -60,7 +62,7 @@ export default new Vuex.Store({
     },
     actions: {
         getApartments({commit}) {
-            axios.get('/apartments.json')
+            ApartmentsService.getApartments()
                 .then(res => {
                     const data = res.data;
                     let apartments = [];
@@ -84,7 +86,7 @@ export default new Vuex.Store({
             };
             let id;
 
-            axios.post('/apartments.json', apartment)
+            ApartmentsService.addApartment(apartment)
                 .then(res => {
                     id = res.data.name;
                     return id;
@@ -114,7 +116,7 @@ export default new Vuex.Store({
                 .catch(err => console.log(err));
         },
         deleteApartment({commit}, id) {
-            axios.delete(`/apartments/${id}.json/`)
+            ApartmentsService.deleteApartment(id)
                 .then(res => {
                     commit('DELETE_APARTMENT', id);
                 })
@@ -136,7 +138,7 @@ export default new Vuex.Store({
                 };
                 commit('EDIT_APARTMENT', finalData);
             } else {
-                axios.put(`/apartments/${data.id}.json/`, apartment)
+                ApartmentsService.editApartment(data.id, apartment)
                     .then(() => {
                         const filename = data.image.name;
                         const ext = filename.slice(filename.lastIndexOf('.') + 1);
@@ -162,7 +164,7 @@ export default new Vuex.Store({
             }
         },
         getReservations({commit}) {
-            axios.get('/reservations.json')
+            ReservationsService.getReservations()
                 .then(res => {
                     const data = res.data;
                     let reservations = [];
@@ -179,7 +181,7 @@ export default new Vuex.Store({
                 .catch(err => console.log(err));
         },
         addReservation({commit}, reservation) {
-            axios.post('/reservations.json', reservation)
+            ReservationsService.addReservation(reservation)
                 .then(res => {
                     reservation.id = res.data.name;
                     commit('ADD_RESERVATION', reservation);
@@ -187,14 +189,14 @@ export default new Vuex.Store({
                 .catch(err => console.log(err));
         },
         deleteReservation({commit}, id) {
-            axios.delete(`/reservations/${id}.json/`)
+            ReservationsService.deleteReservation(id)
                 .then(res => {
                     commit('DELETE_RESERVATION', id);
                 })
                 .catch(err => console.log(err));
         },
         editReservation({commit}, data) {
-            axios.put(`/reservations/${data.id}.json/`, data)
+            ReservationsService.editReservation(data.id, data)
                 .then(res => {
                     commit('EDIT_RESERVATION', data);
                 })
