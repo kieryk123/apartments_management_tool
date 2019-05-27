@@ -1,7 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import axios from 'axios';
-import firebase from 'firebase';
 import * as apartment from '@/store/modules/apartment.js';
 import * as reservation from '@/store/modules/reservation.js';
 

@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 import ApartmentsService from '@/services/ApartmentsService.js';
 
 export const namespaced = true;
