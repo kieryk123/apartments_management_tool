@@ -31,10 +31,10 @@ export default {
     },
     computed: {
         activeReservationsList() {
-            return this.$store.getters.activeReservationsList;
+            return this.$store.getters['reservation/activeReservationsList'];
         },
         apartmentsList() {
-            return this.$store.getters.apartmentsList;
+            return this.$store.getters['apartment/apartmentsList'];
         }
     },
     components: {
@@ -42,7 +42,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss">
-
-</style>

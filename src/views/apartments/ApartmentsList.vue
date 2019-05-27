@@ -31,7 +31,7 @@ export default {
     },
     computed: {
         apartmentsList() {
-            return this.$store.getters.apartmentsList;
+            return this.$store.getters['apartment/apartmentsList'];
         }
     },
     components: {

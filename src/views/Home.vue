@@ -45,7 +45,7 @@ export default {
             return this.$store.getters.previousMonthProfit;
         },
         upcomingReservation() {
-            return this.$store.getters.upcomingReservation;
+            return this.$store.getters['reservation/upcomingReservation'];
         }
     },
     components: {

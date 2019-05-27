@@ -58,7 +58,7 @@ export default {
     }),
     computed: {
         apartmentsList() {
-            return this.$store.getters.apartmentsList;
+            return this.$store.getters['apartment/apartmentsList'];
         }
     },
     methods: {
@@ -98,7 +98,7 @@ export default {
                 image: this.image
             };
 
-            this.$store.dispatch('editApartment', apartment);
+            this.$store.dispatch('apartment/editApartment', apartment);
             this.$router.push({ name: 'apartments' });
         }
     }

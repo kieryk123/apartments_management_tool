@@ -125,12 +125,12 @@ export default {
             return calculatedReservations.slice(0).sort(compare);
         },
         apartmentsList() {
-            return this.$store.getters.apartmentsList;
+            return this.$store.getters['apartment/apartmentsList'];
         }
     },
     methods: {
         handleDeleteReservation(id) {
-            this.$store.dispatch('deleteReservation', id);
+            this.$store.dispatch('reservation/deleteReservation', id);
         },
         goToRoute(route, reservationId) {
             this.$router.push({ name: route, params: {reservationId: reservationId} });

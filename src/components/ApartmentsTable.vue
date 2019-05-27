@@ -89,7 +89,7 @@ export default {
             return this.data.slice(0).sort(compare);
         },
         activeReservationsList() {
-            return this.$store.getters.activeReservationsList;
+            return this.$store.getters['reservation/activeReservationsList'];
         }
     },
     methods: {

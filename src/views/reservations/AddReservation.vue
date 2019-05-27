@@ -65,10 +65,10 @@ export default {
     }),
     computed: {
         activeReservationsList() {
-            return this.$store.getters.activeReservationsList;
+            return this.$store.getters['reservation/activeReservationsList'];
         },
         selectOptions() {
-            const selectOptions = this.$store.getters.apartmentsList.map(apartment => {
+            const selectOptions = this.$store.getters['apartment/apartmentsList'].map(apartment => {
                 return {
                     label: apartment.name,
                     value: apartment.id
@@ -80,11 +80,9 @@ export default {
     },
     methods: {
         setStartDate(date) {
-            // jesli data jest w disabledDates to wyzerować ją
             this.startDate = date;
         },
         setEndDate(date) {
-            // jesli data jest w disabledDates to wyzerować ją
             this.endDate = date;
         },
         handleChooseApartment(option) {
@@ -117,7 +115,7 @@ export default {
                 }
             }
 
-            this.$store.dispatch('addReservation', reservation);
+            this.$store.dispatch('reservation/addReservation', reservation);
             this.$router.push({ name: 'reservations' });
         },
         setDisabledDates() {

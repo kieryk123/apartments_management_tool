@@ -28,8 +28,8 @@ new Vue({
     store,
     render: h => h(App),
     beforeCreate() {
-        this.$store.dispatch('getApartments');
-        this.$store.dispatch('getReservations');
+        this.$store.dispatch('apartment/getApartments');
+        this.$store.dispatch('reservation/getReservations');
     },
     created() {
         firebase.initializeApp(firebaseConfig);

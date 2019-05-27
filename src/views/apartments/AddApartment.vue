@@ -82,7 +82,7 @@ export default {
                 image: this.image
             }
 
-            this.$store.dispatch('addApartment', apartment);
+            this.$store.dispatch('apartment/addApartment', apartment);
             this.$router.push({ name: 'apartments' });
         }
     }

@@ -79,13 +79,13 @@ export default {
     }),
     computed: {
         activeReservationsList() {
-            return this.$store.getters.activeReservationsList;
+            return this.$store.getters['reservation/activeReservationsList'];
         },
         apartmentsList() {
-            return this.$store.getters.apartmentsList;
+            return this.$store.getters['apartment/apartmentsList'];
         },
         selectOptions() {
-            const selectOptions = this.$store.getters.apartmentsList.map(apartment => {
+            const selectOptions = this.$store.getters['apartment/apartmentsList'].map(apartment => {
                 return {
                     label: apartment.name,
                     value: apartment.id
@@ -135,7 +135,7 @@ export default {
                 }
             }
 
-            this.$store.dispatch('editReservation', reservation);
+            this.$store.dispatch('reservation/editReservation', reservation);
             this.$router.push({ name: 'reservations' });
         },
         setDisabledDates() {
