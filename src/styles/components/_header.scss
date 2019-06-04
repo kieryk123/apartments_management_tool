@@ -27,7 +27,7 @@
 
         @include breakpoint(sm) {
             margin-right: 0;
-        }    
+        }
     }
 
     &__hamburger {
@@ -96,7 +96,7 @@
         padding: 0 7px;
 
         &--active {
-            color: #0aafff;
+            color: $link-active-color;
         }
     }
 }

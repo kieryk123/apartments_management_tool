@@ -83,7 +83,7 @@
         }
 
         &--active {
-            color: #0aafff;
+            color: $link-active-color;
         }
     }
 
@@ -137,7 +137,7 @@
         }
 
         a {
-            color: #0aafff;
+            color: $link-active-color;
             text-decoration: none;
         }
     }

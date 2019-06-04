@@ -16,12 +16,12 @@
     }
 
     &--primary {
-        background-color: #2dca73;
+        background-color: $btn-primary-color;
         color: white;
     }
 
     &--secondary {
-        background-color: #f0f0f0;
+        background-color: $btn-secondary-color;
         color: black;
     }
 }
