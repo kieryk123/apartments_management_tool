@@ -107,7 +107,8 @@ export const actions = {
                 ...apartment,
                 imageUrl
             };
-            commit('EDIT_APARTMENT', finalData);
+            ApartmentsService.editApartment(data.id, finalData)
+                .then(() => commit('EDIT_APARTMENT', finalData));
         } else {
             ApartmentsService.editApartment(data.id, apartment)
                 .then(() => {
