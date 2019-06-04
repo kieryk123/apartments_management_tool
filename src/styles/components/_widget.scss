@@ -1,13 +1,11 @@
 .widgets-wrapper {
     display: flex;
     flex-flow: row wrap;
-    // max-height: 800px;
-    // margin-left: -20px; /* Adjustment for the gutter */
     width: 100%;
 }
 
 .widget {
-    margin: 0 30px 30px 0; /* Some gutter */
+    margin: 0 30px 30px 0;
     background-color: #fff;
     width: calc(25% - 20px);
     min-width: 350px;
@@ -76,16 +74,16 @@
             cursor: pointer;
         }
 
-        &--active {
-            color: #0aafff;
-        }
-
         &:first-child {
             border-right: 0.5px solid rgba(#949fb1, 0.35);
         }
 
         &:last-child {
             border-left: 0.5px solid rgba(#949fb1, 0.35);
+        }
+
+        &--active {
+            color: #0aafff;
         }
     }
 
