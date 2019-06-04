@@ -98,7 +98,7 @@ export default {
 
             isBooked ?
                 alert('This apartment is in use. You cannot delete booked apartment.') :
-                this.$store.dispatch('deleteApartment', id);
+                this.$store.dispatch('apartment/deleteApartment', id);
         },
         goToRoute(route, apartmentId) {
             this.$router.push({ name: route, params: {apartmentId: apartmentId} });
